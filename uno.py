@@ -1,17 +1,29 @@
+"""
+Amine Belhaj & Michel Bui
+Programme: Uno
+Ce programme est une simulation simplifiée du jeu uno avec 2 joueurs.
+
+Pour commencer le programme, il faudra faire une instanciation de la classe UnoJeu depuis la console.
+Expemple: jeu = UnoJeu()
+On peut ensuite commencer le jeu.
+"""
+
+# On importer la librairie random afin de pouvoir choisir alléatoirement qui commencera
 import random
 
+# Classe UnoCarte
 
 class UnoCarte:
     def __init__(self, valeur, couleur, estPlus2 = False, estPlus4 = False, estJoker = False):
         """
             Constructeur :
-            Crée une nouvelle carte en mettant les propriétés spécifiées à
-            jour.
+                Crée une nouvelle carte en mettant les propriétés spécifiées à jour.
+
             Propriétés :
-            Valeur (int) : Le numéro de la carte
-            Couleur (str) : La couleur de la carte
-            EstPlus4 (bool) : True si la carte est un +4, False sinon
-            EstPlus2 (bool) : True si la carte est un +2, False sinon
+                Valeur (int) : Le numéro de la carte
+                Couleur (str) : La couleur de la carte
+                EstPlus4 (bool) : True si la carte est un +4, False sinon
+                EstPlus2 (bool) : True si la carte est un +2, False sinon
         """
         self.Valeur = valeur
         self.Couleur = couleur
@@ -19,6 +31,7 @@ class UnoCarte:
         self.EstPlus2 = estPlus2
         self.EstJoker = estJoker
 
+    #
     def __str__(self):
 
         if self.EstJoker:
@@ -30,24 +43,40 @@ class UnoCarte:
         else:
             return str(self.Valeur) + " \t" + self.Couleur
 
+
+# Classe UnoJeu, c'est la classe principale du programme, celle avec quoi on va pouvoir jouer
+
 class UnoJeu:
     def __init__(self):
-
+        """
+            Constructeur :
+                Crée le jeu de cartes.
+                Initialise les joueurs 1 et 2
+        """
         self.CreerJeu()
         self.J1 = self.InitialiserJoueur()
         self.J2 = self.InitialiserJoueur()
 
 
     def AjouterCarteFaceCachee(self, carte):
-
+        """
+            Modifications :
+                Ajoute la carte donnée aux cartes cachées.
+        """
         self.CartesCachees.append(carte)
 
     def AjouterCarteFaceVisible(self, carte):
-
+        """
+            Modifications :
+                Ajoute la carte donnée aux cartes visibles.
+        """
         self.CartesVisibles.append(carte)
 
     def InitialiserJoueur(self):
-
+        """
+            Résultat :
+                Un jeu de 7 cartes piochées sur la pile de cartes cachées.
+        """
         jeu = []
         for i in range(7):
            c = self.CartesCachees.pop()
@@ -55,7 +84,11 @@ class UnoJeu:
         return jeu
 
     def CreerJeu(self):
-
+        """
+            Résultat :
+                Initialise les cartes cachées avec la composition classique du jeu de Uno.
+                Pose une carte face visible.
+        """
         # Préparation du jeu
         self.CartesCachees = []
         # Pour chaque couleur existante
@@ -87,32 +120,51 @@ class UnoJeu:
         self.AjouterCarteFaceVisible(premiereCarte)
 
     def AfficherCartesCachees(self):
-
+        """
+            Modifications :
+                Affiche les cartes cachées.
+        """
         for c in self.CartesCachees:
             print(str(c))
 
 
     def AfficherCartesVisibles(self):
-
+        """
+            Modifications :
+                Affiche les cartes visibles.
+        """
         for c in self.CartesVisibles:
             print(str(c))
 
     def MontrerJeuJ1(self):
-
+        """
+            Modifications :
+                Affiche les cartes du joueur 1, stockées dans self.J1
+        """
         for i in range(len(self.J1)):
             print(i, " : ", self.J1[i])
 
     def MontrerJeuJ2(self):
-
-        for i in range(len(self.J2)):
-            print(i, " : ", self.J2[i])
+        """
+            Modifications :
+                Affiche les cartes du joueur 2, stockées dans self.J2
+        """
+        for i in range(len(self.J1)):
+            print(i, " : ", self.J1[i])
 
     def DerniereCarteVisible(self):
-
+        """
+            Résultat :
+                Renvoie la dernière carte posée sur les cartes visibles
+        """
         return self.CartesVisibles.copy().pop()
 
 
     def MontrerDerniereCarteVisible(self):
+        """
+            Modifications :
+                Affiche la dernière carte posée sur les cartes visibles
+        """
         print(self.DerniereCarteVisible())
 
 
@@ -156,8 +208,8 @@ class UnoJeu:
     def J1_Joue(self, i):
         """
             Modifications :
-            Permet au joueur 1 de jouer sa carte n°i, seulement s'il peut la
-            jouer.
+                Permet au joueur 1 de jouer sa carte n°i, seulement s'il peut la
+                jouer.
         """
         # Vérification de la présence de la carte (est-ce que cette indice existe ?)
         # Sinon, affiche un message d'erreur.
@@ -213,3 +265,4 @@ class UnoJeu:
         else:
             print("Le joueur 2 ne peut pas jouer ", c, " sur ", end=" ")
             self.MontrerDerniereCarteVisible()
+
